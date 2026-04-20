@@ -1,11 +1,588 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HDP O'quv Markazi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --g900:#064e3b;--g800:#065f46;--g700:#047857;
+  --g600:#059669;--g500:#10b981;--g400:#34d399;
+  --g300:#6ee7b7;--g100:#d1fae5;--g50:#ecfdf5;
+  --white:#fff;--gray50:#f9fafb;
+  --gray600:#4b5563;--gray700:#374151;--gray800:#1f2937;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--gray800);background:var(--white);overflow-x:hidden;}
+.cursor-glow{width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(16,185,129,.07) 0%,transparent 70%);position:fixed;pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:left .08s,top .08s;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--g100);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:72px;box-shadow:0 4px 30px rgba(5,150,105,.08);transition:all .3s;}
+nav.scrolled{box-shadow:0 8px 40px rgba(5,150,105,.15);}
+.nav-logo{display:flex;align-items:center;gap:12px;}
+.nav-logo-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--g600),var(--g400));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Playfair Display',serif;font-size:20px;font-weight:900;box-shadow:0 4px 15px rgba(16,185,129,.4);animation:logoPulse 3s ease-in-out infinite;}
+@keyframes logoPulse{0%,100%{box-shadow:0 4px 15px rgba(16,185,129,.4);}50%{box-shadow:0 4px 30px rgba(16,185,129,.7);}}
+.nav-logo-text{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--g800);}
+.nav-logo-sub{font-size:11px;color:var(--g600);font-weight:500;letter-spacing:.5px;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--gray700);font-weight:500;font-size:14px;position:relative;transition:.3s;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--g500);border-radius:2px;transition:.3s;}
+.nav-links a:hover{color:var(--g600);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{background:linear-gradient(135deg,var(--g600),var(--g500));color:#fff;padding:10px 24px;border-radius:50px;font-weight:600;font-size:14px;text-decoration:none;transition:.3s;box-shadow:0 4px 15px rgba(5,150,105,.3);}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(5,150,105,.4);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{width:24px;height:2px;background:var(--g700);border-radius:2px;transition:.3s;}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:white;padding:20px 5%;border-bottom:1px solid var(--g100);box-shadow:0 10px 30px rgba(0,0,0,.1);z-index:999;}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;padding:12px 0;color:var(--gray700);text-decoration:none;font-weight:500;border-bottom:1px solid var(--g50);}
+
+/* HEADER */
+header{min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:100px 5% 60px;}
+.header-bg{position:absolute;inset:0;z-index:0;}
+.header-bg img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.header-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,78,59,.92) 0%,rgba(4,120,87,.85) 50%,rgba(16,185,129,.75) 100%);}
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;}
+.particle{position:absolute;border-radius:50%;background:rgba(255,255,255,.1);animation:particleFloat linear infinite;}
+@keyframes particleFloat{0%{transform:translateY(100vh) rotate(0deg);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-100px) rotate(720deg);opacity:0;}}
+.hc{position:absolute;border-radius:50%;background:rgba(255,255,255,.04);animation:float 8s ease-in-out infinite;z-index:1;}
+.hc1{width:400px;height:400px;top:-100px;right:-100px;}
+.hc2{width:300px;height:300px;bottom:-50px;left:-80px;animation-delay:2s;}
+.hc3{width:200px;height:200px;top:40%;right:20%;animation-delay:4s;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:800px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:8px 20px;color:#fff;font-size:13px;font-weight:500;margin-bottom:28px;animation:fadeInDown .8s ease;}
+.hero-badge i{color:var(--g300);}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(48px,7vw,88px);font-weight:900;color:#fff;line-height:1.05;margin-bottom:20px;animation:fadeInUp .8s ease .2s both;}
+.hero-title span{background:linear-gradient(90deg,var(--g300),#a7f3d0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:18px;color:rgba(255,255,255,.88);line-height:1.7;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto;animation:fadeInUp .8s ease .4s both;}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp .8s ease .6s both;}
+.btn-white{background:#fff;color:var(--g700);padding:15px 36px;border-radius:50px;font-weight:700;font-size:15px;text-decoration:none;transition:.3s;box-shadow:0 8px 30px rgba(0,0,0,.2);}
+.btn-white:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(0,0,0,.3);}
+.btn-ghost{border:2px solid rgba(255,255,255,.5);color:#fff;padding:13px 36px;border-radius:50px;font-weight:600;font-size:15px;text-decoration:none;transition:.3s;backdrop-filter:blur(10px);}
+.btn-ghost:hover{background:rgba(255,255,255,.15);border-color:#fff;transform:translateY(-2px);}
+.hero-stats{display:flex;gap:48px;justify-content:center;margin-top:60px;animation:fadeInUp .8s ease .8s both;flex-wrap:wrap;}
+.stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:#fff;display:block;}
+.stat-label{font-size:13px;color:rgba(255,255,255,.7);margin-top:4px;}
+.scroll-ind{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.6);animation:bounce 2s infinite;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;font-size:10px;letter-spacing:2px;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+/* SHARED */
+section{padding:90px 5%;}
+.s-label{display:inline-flex;align-items:center;gap:8px;color:var(--g600);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.s-label::before{content:'';width:24px;height:2px;background:var(--g500);border-radius:2px;}
+.s-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);font-weight:900;color:var(--g900);line-height:1.2;margin-bottom:16px;}
+.s-sub{font-size:17px;color:var(--gray600);line-height:1.7;}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.rl{opacity:0;transform:translateX(-40px);transition:opacity .7s ease,transform .7s ease;}
+.rl.visible{opacity:1;transform:translateX(0);}
+.rr{opacity:0;transform:translateX(40px);transition:opacity .7s ease,transform .7s ease;}
+.rr.visible{opacity:1;transform:translateX(0);}
+.rs{opacity:0;transform:scale(.92);transition:opacity .7s ease,transform .7s ease;}
+.rs.visible{opacity:1;transform:scale(1);}
+.d1{transition-delay:.1s!important;}.d2{transition-delay:.2s!important;}.d3{transition-delay:.3s!important;}.d4{transition-delay:.4s!important;}
+
+/* ABOUT */
+#about{background:var(--gray50);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto;}
+.about-visual{position:relative;}
+.about-img-wrap{width:100%;aspect-ratio:4/3;border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(5,150,105,.25);}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:.5s;}
+.about-img-wrap:hover img{transform:scale(1.04);}
+.about-badge{position:absolute;bottom:-24px;right:-24px;background:#fff;border-radius:20px;padding:20px 24px;box-shadow:0 20px 60px rgba(0,0,0,.12);border:1px solid var(--g100);text-align:center;}
+.about-badge-num{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;color:var(--g600);}
+.about-badge-txt{font-size:12px;color:var(--gray600);font-weight:500;}
+.about-feats{display:flex;flex-direction:column;gap:16px;margin-top:32px;}
+.feat{display:flex;align-items:flex-start;gap:16px;padding:16px;border-radius:12px;background:#fff;border:1px solid var(--g100);transition:.3s;}
+.feat:hover{border-color:var(--g400);box-shadow:0 8px 24px rgba(16,185,129,.1);transform:translateX(4px);}
+.feat-ico{width:44px;height:44px;border-radius:12px;flex-shrink:0;background:var(--g50);color:var(--g600);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.feat h4{font-weight:700;font-size:15px;color:var(--gray800);margin-bottom:4px;}
+.feat p{font-size:13px;color:var(--gray600);}
+
+/* FILIALLAR */
+#filiallar{background:#fff;}
+.fil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1200px;margin:48px auto 0;}
+.fil-card{border-radius:24px;overflow:hidden;border:1px solid var(--g100);transition:.4s cubic-bezier(.175,.885,.32,1.275);background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.05);}
+.fil-card:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(5,150,105,.15);border-color:var(--g300);}
+.fil-top{height:180px;position:relative;overflow:hidden;}
+.fil-top img{width:100%;height:100%;object-fit:cover;display:block;transition:.5s;}
+.fil-card:hover .fil-top img{transform:scale(1.07);}
+.fil-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,78,59,.25) 0%,rgba(6,78,59,.75) 100%);}
+.fil-num{position:absolute;top:14px;left:18px;font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:rgba(255,255,255,.75);}
+.fil-name{position:absolute;bottom:14px;left:18px;right:18px;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;}
+.fil-body{padding:22px;}
+.fil-row{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--gray600);margin-bottom:8px;}
+.fil-row:last-child{margin-bottom:0;}
+.fil-row i{color:var(--g500);margin-top:2px;width:16px;flex-shrink:0;}
+
+/* YO'NALISHLAR */
+#yonalishlar{background:linear-gradient(160deg,var(--g50) 0%,var(--white) 60%);}
+.yn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;max-width:1100px;margin:48px auto 0;}
+.yn-card{border-radius:28px;overflow:hidden;background:#fff;border:2px solid var(--g100);transition:.4s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 4px 20px rgba(0,0,0,.05);}
+.yn-card:hover{transform:translateY(-10px);box-shadow:0 40px 100px rgba(5,150,105,.15);border-color:var(--g300);}
+.yn-img{height:200px;position:relative;overflow:hidden;}
+.yn-img img{width:100%;height:100%;object-fit:cover;display:block;transition:.5s;}
+.yn-card:hover .yn-img img{transform:scale(1.06);}
+.yn-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,78,59,.2),rgba(6,78,59,.65));}
+.yn-badge{position:absolute;top:16px;right:16px;z-index:2;padding:5px 14px;border-radius:50px;font-size:11px;font-weight:700;letter-spacing:.5px;color:#fff;animation:badgePulse 2s ease-in-out infinite;}
+@keyframes badgePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
+.yn-body{padding:28px 30px 32px;}
+.yn-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.yn-ico{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.yn-ico i{font-size:22px;color:#fff;}
+.yn-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--g900);}
+.yn-desc{color:var(--gray600);font-size:15px;line-height:1.7;margin-bottom:20px;}
+.yn-feats{display:flex;flex-direction:column;gap:9px;}
+.yn-f{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray700);}
+.yn-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:#fff;}
+
+/* TEACHERS */
+#teachers{background:var(--gray50);}
+.t-grid{display:flex;flex-direction:column;gap:20px;max-width:1100px;margin:0 auto;}
+.t-card{display:flex;border-radius:24px;overflow:hidden;background:#fff;border:1px solid var(--g100);height:120px;transition:.35s;box-shadow:0 4px 20px rgba(0,0,0,.04);position:relative;}
+.t-card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--g400),var(--g700));transform:scaleY(0);transform-origin:bottom;transition:.3s;}
+.t-card:hover::after{transform:scaleY(1);}
+.t-card:hover{transform:translateX(8px);box-shadow:0 12px 40px rgba(5,150,105,.12);border-color:var(--g300);}
+.t-img{width:30%;min-width:220px;position:relative;overflow:hidden;flex-shrink:0;}
+.t-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:.4s;}
+.t-card:hover .t-img img{transform:scale(1.06);}
+.t-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,78,59,.1),rgba(6,78,59,.35));}
+.t-num{position:absolute;top:10px;left:12px;font-size:11px;color:rgba(255,255,255,.9);font-weight:700;letter-spacing:1px;z-index:2;background:rgba(6,78,59,.5);padding:2px 8px;border-radius:20px;}
+.t-info{flex:1;padding:22px 28px;display:flex;flex-direction:column;justify-content:center;gap:6px;border-left:1px solid var(--g50);}
+.t-name{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--g900);}
+.t-meta{display:flex;gap:20px;flex-wrap:wrap;}
+.t-meta span{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--gray600);}
+.t-meta i{color:var(--g500);font-size:12px;}
+.t-badge{align-self:center;padding:0 28px;}
+.badge-m{padding:7px 18px;border-radius:50px;font-size:12px;font-weight:700;background:#fef3c7;color:#92400e;}
+.badge-e{padding:7px 18px;border-radius:50px;font-size:12px;font-weight:700;background:#dbeafe;color:#1e40af;}
+
+/* WHY US */
+#whyus{background:linear-gradient(160deg,var(--g50),var(--white));}
+.wu-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1100px;margin:0 auto 60px;}
+.wu-card{border-radius:28px;overflow:hidden;background:#fff;border:1px solid var(--g100);transition:.4s;}
+.wu-card:hover{transform:translateY(-10px);box-shadow:0 40px 80px rgba(5,150,105,.12);}
+.wu-img{height:160px;overflow:hidden;position:relative;}
+.wu-img img{width:100%;height:100%;object-fit:cover;display:block;transition:.5s;}
+.wu-card:hover .wu-img img{transform:scale(1.07);}
+.wu-img-ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,78,59,.2),rgba(6,78,59,.6));}
+.wu-body{padding:28px;}
+.wu-num{font-size:40px;font-weight:900;font-family:'Playfair Display',serif;color:var(--g600);margin-bottom:8px;}
+.wu-card h3{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--g800);margin-bottom:10px;}
+.wu-card p{font-size:14px;color:var(--gray600);line-height:1.7;}
+.wu-tagline{max-width:900px;margin:0 auto;border-radius:28px;overflow:hidden;position:relative;}
+.wu-tagline img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.wu-tagline-inner{position:relative;z-index:2;background:linear-gradient(135deg,rgba(6,78,59,.93),rgba(5,150,105,.88));padding:52px;text-align:center;}
+.wu-tagline p{font-size:clamp(18px,2.5vw,24px);line-height:1.6;color:rgba(255,255,255,.92);max-width:700px;margin:0 auto 28px;}
+.wu-tagline strong{color:var(--g300);font-weight:700;}
+
+/* REGISTER */
+#register{background:var(--gray50);}
+.reg-wrap{max-width:780px;margin:0 auto;background:#fff;border-radius:32px;padding:60px;box-shadow:0 20px 80px rgba(5,150,105,.1);border:1px solid var(--g100);position:relative;overflow:hidden;}
+.reg-wrap::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,var(--g100),transparent);pointer-events:none;}
+.reg-head{text-align:center;margin-bottom:40px;}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.fg-group{display:flex;flex-direction:column;gap:8px;}
+.fg-group.full{grid-column:1/-1;}
+.fg-group label{font-size:13px;font-weight:600;color:var(--g800);}
+.inp{padding:14px 18px;border:2px solid var(--g100);border-radius:14px;font-size:15px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--gray800);background:var(--g50);transition:.3s;outline:none;width:100%;}
+.inp:focus{border-color:var(--g400);background:#fff;box-shadow:0 0 0 4px rgba(16,185,129,.1);}
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.ch-item{display:flex;align-items:center;gap:12px;padding:14px 18px;border:2px solid var(--g100);border-radius:14px;cursor:pointer;transition:.3s;background:var(--g50);}
+.ch-item:hover,.ch-item.checked{border-color:var(--g400);}
+.ch-item input[type=checkbox]{accent-color:var(--g600);width:18px;height:18px;flex-shrink:0;}
+.ch-item span{font-size:14px;font-weight:500;color:var(--gray700);}
+.ch-kids:hover,.ch-kids.checked{border-color:#f97316!important;background:#fff7ed!important;}
+.ch-ielts:hover,.ch-ielts.checked{border-color:#2563eb!important;background:#eff6ff!important;}
+.btn-send{width:100%;padding:18px;background:linear-gradient(135deg,var(--g700),var(--g500));color:#fff;border:none;border-radius:50px;font-size:17px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:.3s;box-shadow:0 8px 30px rgba(5,150,105,.35);margin-top:8px;}
+.btn-send:hover{transform:translateY(-3px);box-shadow:0 16px 45px rgba(5,150,105,.45);}
+.success{display:none;text-align:center;padding:40px 20px;}
+.success-ico{width:80px;height:80px;border-radius:50%;background:var(--g100);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;color:var(--g600);animation:successPop .6s ease;}
+@keyframes successPop{0%{transform:scale(0);}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+.success h3{font-family:'Playfair Display',serif;font-size:28px;color:var(--g700);margin-bottom:12px;}
+.success p{color:var(--gray600);}
+
+/* FOOTER */
+footer{background:linear-gradient(160deg,var(--g900) 0%,#042f1e 100%);color:rgba(255,255,255,.8);padding:72px 5% 32px;position:relative;overflow:hidden;}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g500),transparent);}
+.ft-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:48px;max-width:1200px;margin:0 auto 60px;}
+.ft-brand p{margin-top:16px;font-size:14px;line-height:1.7;color:rgba(255,255,255,.6);}
+.ft-socials{display:flex;gap:12px;margin-top:20px;}
+.soc{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-size:16px;transition:.3s;}
+.soc:hover{background:var(--g600);border-color:var(--g500);transform:translateY(-3px) rotate(5deg);}
+.ft-col h4{font-size:15px;font-weight:700;color:#fff;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.1);}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.ft-col ul li a{color:rgba(255,255,255,.6);text-decoration:none;transition:.3s;display:flex;align-items:center;gap:8px;font-size:13px;}
+.ft-col ul li a:hover{color:var(--g400);transform:translateX(4px);}
+.ft-col ul li a i{font-size:11px;color:var(--g500);}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;font-size:13px;color:rgba(255,255,255,.4);flex-wrap:wrap;gap:12px;}
+
+@media(max-width:1024px){.ft-grid{grid-template-columns:1fr 1fr;}.about-grid,.fil-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:900px){.nav-links,.nav-cta{display:none;}.hamburger{display:flex;}.wu-cards,.yn-grid{grid-template-columns:1fr;}.t-img{min-width:160px;}.ch-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.about-grid,.fil-grid{grid-template-columns:1fr;}.ft-grid{grid-template-columns:1fr;}.fg{grid-template-columns:1fr;}.hero-stats{gap:28px;}.reg-wrap{padding:32px 24px;}.t-card{height:auto;flex-direction:column;}.t-img{width:100%;height:150px;min-width:unset;}.t-badge{align-self:flex-start;padding:0 0 20px 20px;}}
+</style>
 </head>
 <body>
-    <h1>Hello World</h1>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="nav-logo-icon">H</div>
+    <div><div class="nav-logo-text">HDP</div><div class="nav-logo-sub">O'quv Markazi</div></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">Biz haqimizda</a></li>
+    <li><a href="#filiallar">Filiallar</a></li>
+    <li><a href="#yonalishlar">Yo'nalishlar</a></li>
+    <li><a href="#teachers">O'qituvchilar</a></li>
+    <li><a href="#whyus">Nima uchun biz</a></li>
+  </ul>
+  <a href="#register" class="nav-cta">Ro'yxatdan o'tish</a>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">Biz haqimizda</a>
+  <a href="#filiallar" onclick="closeMenu()">Filiallar</a>
+  <a href="#yonalishlar" onclick="closeMenu()">Yo'nalishlar</a>
+  <a href="#teachers" onclick="closeMenu()">O'qituvchilar</a>
+  <a href="#whyus" onclick="closeMenu()">Nima uchun biz</a>
+  <a href="#register" onclick="closeMenu()">Ro'yxatdan o'tish</a>
+</div>
+
+<!-- HEADER -->
+<header id="home">
+  <div class="header-bg">
+    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1600&q=80" alt="Ta'lim">
+  </div>
+  <div class="particles" id="particles"></div>
+  <div class="hc hc1"></div><div class="hc hc2"></div><div class="hc hc3"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-star"></i> Namangan viloyatining yetakchi o'quv markazi</div>
+    <h1 class="hero-title">Kelajagingizni<br><span>HDP</span> bilan quring</h1>
+    <p class="hero-sub">Matematika va Ingliz tili bo'yicha zamonaviy ta'lim, tajribali o'qituvchilar va samarali metodlar bilan muvaffaqiyatga oching.</p>
+    <div class="hero-btns">
+      <a href="#register" class="btn-white">Hoziroq ro'yxatdan o'ting</a>
+      <a href="#yonalishlar" class="btn-ghost">Yo'nalishlarni ko'rish</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" data-t="6">0</span><div class="stat-label">Filial</div></div>
+      <div class="stat"><span class="stat-num" data-t="500">0</span><div class="stat-label">Muvaffaqiyatli talabalar</div></div>
+      <div class="stat"><span class="stat-num" data-t="19">0</span><div class="stat-label">Tajribali o'qituvchilar</div></div>
+      <div class="stat"><span class="stat-num" data-t="5">0</span><div class="stat-label">Yillik tajriba</div></div>
+    </div>
+  </div>
+  <div class="scroll-ind" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    SCROLL<i class="fas fa-chevron-down"></i>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual rl">
+      <div class="about-img-wrap">
+        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80" alt="HDP markazi">
+      </div>
+      <div class="about-badge rs d3">
+        <div class="about-badge-num">5+</div>
+        <div class="about-badge-txt">Yillik faoliyat</div>
+      </div>
+    </div>
+    <div class="rr">
+      <div class="s-label">Biz haqimizda</div>
+      <h2 class="s-title">HDP — Sifatli ta'lim markazi</h2>
+      <p class="s-sub">HDP o'quv markazi 2019-yildan buyon Namangan viloyatida faoliyat yuritib, minglab o'quvchilarga sifatli ta'lim xizmatini ko'rsatib kelmoqda. Zamonaviy metodlar va tajribali pedagoglar bilan maqsadingizga erishing.</p>
+      <div class="about-feats">
+        <div class="feat"><div class="feat-ico"><i class="fas fa-graduation-cap"></i></div><div><h4>Zamonaviy o'quv dasturlari</h4><p>Xalqaro standartlarga mos keluvchi o'quv rejalar va materiallar</p></div></div>
+        <div class="feat"><div class="feat-ico"><i class="fas fa-users"></i></div><div><h4>Kichik guruhlar</h4><p>Har bir o'quvchiga individual e'tibor, guruh 8–12 kishidan iborat</p></div></div>
+        <div class="feat"><div class="feat-ico"><i class="fas fa-trophy"></i></div><div><h4>Natijaga yo'naltirilgan</h4><p>Olimpiadalar, DTM va IELTS bo'yicha alohida tayyorlov kurslari</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILIALLAR -->
+<section id="filiallar">
+  <div style="text-align:center;max-width:640px;margin:0 auto 8px" class="reveal">
+    <div class="s-label">Bizning filiallar</div>
+    <h2 class="s-title">6 ta filialimiz</h2>
+    <p class="s-sub" style="margin:0 auto">Namangan viloyatining turli tumanlarida qulay joylarda faoliyat yuritamiz</p>
+  </div>
+  <div class="fil-grid">
+    <div class="fil-card reveal d1"><div class="fil-top"><img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&q=80" alt="Namangan Markaz"><div class="fil-overlay"></div><div class="fil-num">01</div><div class="fil-name">Namangan Markaz</div></div><div class="fil-body"><div class="fil-row"><i class="fas fa-map-marker-alt"></i>Mustaqillik ko'chasi, 45-uy</div><div class="fil-row"><i class="fas fa-phone"></i>+998 90 123 45 67</div><div class="fil-row"><i class="fas fa-clock"></i>Du-Yak, 09:00 – 20:00</div></div></div>
+    <div class="fil-card reveal d2"><div class="fil-top"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Xoqand"><div class="fil-overlay"></div><div class="fil-num">02</div><div class="fil-name">Xoqand Filiali</div></div><div class="fil-body"><div class="fil-row"><i class="fas fa-map-marker-alt"></i>Amir Temur ko'chasi, 12-uy</div><div class="fil-row"><i class="fas fa-phone"></i>+998 90 234 56 78</div><div class="fil-row"><i class="fas fa-clock"></i>Du-Yak, 09:00 – 20:00</div></div></div>
+    <div class="fil-card reveal d3"><div class="fil-top"><img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=80" alt="Pop"><div class="fil-overlay"></div><div class="fil-num">03</div><div class="fil-name">Pop Filiali</div></div><div class="fil-body"><div class="fil-row"><i class="fas fa-map-marker-alt"></i>Markaziy ko'cha, 7-uy</div><div class="fil-row"><i class="fas fa-phone"></i>+998 90 345 67 89</div><div class="fil-row"><i class="fas fa-clock"></i>Du-Yak, 09:00 – 20:00</div></div></div>
+    <div class="fil-card reveal d1"><div class="fil-top"><img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=600&q=80" alt="Chortoq"><div class="fil-overlay"></div><div class="fil-num">04</div><div class="fil-name">Chortoq Filiali</div></div><div class="fil-body"><div class="fil-row"><i class="fas fa-map-marker-alt"></i>Bo'ston ko'chasi, 23-uy</div><div class="fil-row"><i class="fas fa-phone"></i>+998 90 456 78 90</div><div class="fil-row"><i class="fas fa-clock"></i>Du-Yak, 09:00 – 20:00</div></div></div>
+    <div class="fil-card reveal d2"><div class="fil-top"><img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&q=80" alt="Kosonsoy"><div class="fil-overlay"></div><div class="fil-num">05</div><div class="fil-name">Kosonsoy Filiali</div></div><div class="fil-body"><div class="fil-row"><i class="fas fa-map-marker-alt"></i>Navoi ko'chasi, 18-uy</div><div class="fil-row"><i class="fas fa-phone"></i>+998 90 567 89 01</div><div class="fil-row"><i class="fas fa-clock"></i>Du-Yak, 09:00 – 20:00</div></div></div>
+    <div class="fil-card reveal d3"><div class="fil-top"><img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80" alt="Uychi"><div class="fil-overlay"></div><div class="fil-num">06</div><div class="fil-name">Uychi Filiali</div></div><div class="fil-body"><div class="fil-row"><i class="fas fa-map-marker-alt"></i>Istiqlol ko'chasi, 31-uy</div><div class="fil-row"><i class="fas fa-phone"></i>+998 90 678 90 12</div><div class="fil-row"><i class="fas fa-clock"></i>Du-Yak, 09:00 – 20:00</div></div></div>
+  </div>
+</section>
+
+<!-- YO'NALISHLAR -->
+<section id="yonalishlar">
+  <div style="text-align:center;max-width:640px;margin:0 auto 8px" class="reveal">
+    <div class="s-label">Yo'nalishlarimiz</div>
+    <h2 class="s-title">Qaysi sohani o'rganmoqchisiz?</h2>
+    <p class="s-sub" style="margin:0 auto">Professional o'qituvchilar va kuchli dastur asosida muvaffaqiyatga erishing</p>
+  </div>
+  <div class="yn-grid">
+
+    <div class="yn-card reveal d1">
+      <div class="yn-img"><img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=700&q=80" alt="Matematika"><div class="yn-overlay"></div></div>
+      <div class="yn-body">
+        <div class="yn-head">
+          <div class="yn-ico" style="background:linear-gradient(135deg,#10b981,#047857);box-shadow:0 8px 20px rgba(5,150,105,.3)"><i class="fas fa-calculator"></i></div>
+          <div class="yn-title">Matematika</div>
+        </div>
+        <p class="yn-desc">Asosiy hisobdan tortib oliy matematikagacha. DTM va olimpiada tayyorlov kurslari. Har bir mavzu tushunilgunga qadar tushuntiriladi.</p>
+        <div class="yn-feats">
+          <div class="yn-f"><div class="yn-dot" style="background:var(--g500)">✓</div>Asosiy va oliy matematika</div>
+          <div class="yn-f"><div class="yn-dot" style="background:var(--g500)">✓</div>DTM va olimpiada tayyorlov</div>
+          <div class="yn-f"><div class="yn-dot" style="background:var(--g500)">✓</div>Individual va guruh darslar</div>
+          <div class="yn-f"><div class="yn-dot" style="background:var(--g500)">✓</div>Online va offline shaklda</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="yn-card reveal d2">
+      <div class="yn-img"><img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=700&q=80" alt="Ingliz tili"><div class="yn-overlay"></div></div>
+      <div class="yn-body">
+        <div class="yn-head">
+          <div class="yn-ico" style="background:linear-gradient(135deg,#10b981,#047857);box-shadow:0 8px 20px rgba(5,150,105,.3)"><i class="fas fa-language"></i></div>
+          <div class="yn-title">Ingliz tili</div>
+        </div>
+        <p class="yn-desc">A1 darajasidan C1 darajasigacha. Suhbat va business ingliz kurslari. Zamonaviy metodlar bilan tez natijalarga erishing.</p>
+        <div class="yn-feats">
+          <div class="yn-f"><div class="yn-dot" style="background:var(--g500)">✓</div>A1 – C1 barcha darajalar</div>
+          <div class="yn-f"><div class="yn-dot" style="background:var(--g500)">✓</div>Suhbat va business ingliz</div>
+          <div class="yn-f"><div class="yn-dot" style="background:var(--g500)">✓</div>General English kurslar</div>
+          <div class="yn-f"><div class="yn-dot" style="background:var(--g500)">✓</div>Zamonaviy o'qitish metodlari</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="yn-card reveal d3">
+      <div class="yn-img"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=700&q=80" alt="Kichkinalar Matematikasi"><div class="yn-overlay" style="background:linear-gradient(180deg,rgba(120,53,15,.2),rgba(120,53,15,.65))"></div><div class="yn-badge" style="background:linear-gradient(135deg,#f97316,#fbbf24)">✦ YANGI</div></div>
+      <div class="yn-body">
+        <div class="yn-head">
+          <div class="yn-ico" style="background:linear-gradient(135deg,#f97316,#fb923c);box-shadow:0 8px 20px rgba(249,115,22,.3)"><i class="fas fa-child"></i></div>
+          <div class="yn-title" style="color:#92400e">Kichkinalar Matematikasi</div>
+        </div>
+        <p class="yn-desc">6–12 yoshli bolalar uchun maxsus ishlab chiqilgan qiziqarli matematik kurs. O'yin orqali o'rganish va mantiqiy fikrlashni rivojlantirish.</p>
+        <div class="yn-feats">
+          <div class="yn-f"><div class="yn-dot" style="background:#f97316">✓</div>6–12 yosh uchun mo'ljallangan</div>
+          <div class="yn-f"><div class="yn-dot" style="background:#f97316">✓</div>O'yin va interaktiv darslar</div>
+          <div class="yn-f"><div class="yn-dot" style="background:#f97316">✓</div>Mantiqiy fikrlash rivojlantirish</div>
+          <div class="yn-f"><div class="yn-dot" style="background:#f97316">✓</div>Mental arifmetika asoslari</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="yn-card reveal d4">
+      <div class="yn-img"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&q=80" alt="IELTS"><div class="yn-overlay" style="background:linear-gradient(180deg,rgba(30,58,138,.2),rgba(30,58,138,.65))"></div><div class="yn-badge" style="background:linear-gradient(135deg,#2563eb,#818cf8)">✦ YANGI</div></div>
+      <div class="yn-body">
+        <div class="yn-head">
+          <div class="yn-ico" style="background:linear-gradient(135deg,#2563eb,#60a5fa);box-shadow:0 8px 20px rgba(37,99,235,.3)"><i class="fas fa-pen-nib"></i></div>
+          <div class="yn-title" style="color:#1e3a8a">IELTS Tayyorlov</div>
+        </div>
+        <p class="yn-desc">Academic va General Training bo'yicha intensiv kurs. Mock test va band scoring strategiyalari bilan 6.5–8.0 ball oling.</p>
+        <div class="yn-feats">
+          <div class="yn-f"><div class="yn-dot" style="background:#2563eb">✓</div>Academic va General Training</div>
+          <div class="yn-f"><div class="yn-dot" style="background:#2563eb">✓</div>Mock test va tahlil</div>
+          <div class="yn-f"><div class="yn-dot" style="background:#2563eb">✓</div>Band 6.5–8.0 maqsad</div>
+          <div class="yn-f"><div class="yn-dot" style="background:#2563eb">✓</div>Sertifikatlangan o'qituvchilar</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TEACHERS -->
+<section id="teachers">
+  <div style="text-align:center;max-width:600px;margin:0 auto 48px" class="reveal">
+    <div class="s-label">Jamoamiz</div>
+    <h2 class="s-title">Bizning o'qituvchilar</h2>
+    <p class="s-sub" style="margin:0 auto">Har biri o'z sohasida chuqur bilim va katta tajribaga ega mutaxassislar</p>
+  </div>
+  <div class="t-grid">
+    <div class="t-card reveal d1"><div class="t-img"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&fit=crop&crop=face" alt="Abdullayev Farhodjon"><div class="t-overlay"></div><div class="t-num">01</div></div><div class="t-info"><div class="t-name">Abdullayev Farhodjon</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>8 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Xoqanda dars beradi</span></div></div><div class="t-badge"><span class="badge-m">Matematika</span></div></div>
+    <div class="t-card reveal d2"><div class="t-img"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80&fit=crop&crop=face" alt="Sultonova Mavluda"><div class="t-overlay"></div><div class="t-num">02</div></div><div class="t-info"><div class="t-name">Sultonova Mavluda</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>6 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Namangan Markazda</span></div></div><div class="t-badge"><span class="badge-e">Ingliz tili</span></div></div>
+    <div class="t-card reveal d3"><div class="t-img"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&fit=crop&crop=face" alt="Holmatov Alisher"><div class="t-overlay"></div><div class="t-num">03</div></div><div class="t-info"><div class="t-name">Holmatov Alisher</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>10 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Pop tumanida</span></div></div><div class="t-badge"><span class="badge-m">Matematika</span></div></div>
+    <div class="t-card reveal d1"><div class="t-img"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80&fit=crop&crop=face" alt="Nazarova Kamola"><div class="t-overlay"></div><div class="t-num">04</div></div><div class="t-info"><div class="t-name">Nazarova Kamola</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>5 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Chortoq tumanida</span></div></div><div class="t-badge"><span class="badge-e">Ingliz tili</span></div></div>
+    <div class="t-card reveal d2"><div class="t-img"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&fit=crop&crop=face" alt="Baxtiyorov Ibrohim"><div class="t-overlay"></div><div class="t-num">05</div></div><div class="t-info"><div class="t-name">Baxtiyorov Ibrohim</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>7 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Kosonsoy tumanida</span></div></div><div class="t-badge"><span class="badge-m">Matematika</span></div></div>
+    <div class="t-card reveal d3"><div class="t-img"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&q=80&fit=crop&crop=face" alt="Zokirova Oydin"><div class="t-overlay"></div><div class="t-num">06</div></div><div class="t-info"><div class="t-name">Zokirova Oydin</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>4 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Uychi tumanida</span></div></div><div class="t-badge"><span class="badge-e">Ingliz tili</span></div></div>
+    <div class="t-card reveal d1"><div class="t-img"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80&fit=crop&crop=face" alt="Mirzayev Ravshan"><div class="t-overlay"></div><div class="t-num">07</div></div><div class="t-info"><div class="t-name">Mirzayev Ravshan</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>9 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Namangan Markazda</span></div></div><div class="t-badge"><span class="badge-m">Matematika</span></div></div>
+    <div class="t-card reveal d2"><div class="t-img"><img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?w=400&q=80&fit=crop&crop=face" alt="Fayzullayeva Yulduz"><div class="t-overlay"></div><div class="t-num">08</div></div><div class="t-info"><div class="t-name">Fayzullayeva Yulduz</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>6 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Xoqanda dars beradi</span></div></div><div class="t-badge"><span class="badge-e">Ingliz tili</span></div></div>
+    <div class="t-card reveal d3"><div class="t-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80&fit=crop&crop=face" alt="Axmedov Timur"><div class="t-overlay"></div><div class="t-num">09</div></div><div class="t-info"><div class="t-name">Axmedov Timur</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>12 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Namangan Markazda</span></div></div><div class="t-badge"><span class="badge-m">Matematika</span></div></div>
+    <div class="t-card reveal d1"><div class="t-img"><img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&q=80&fit=crop&crop=face" alt="Djalolov Sherzod"><div class="t-overlay"></div><div class="t-num">10</div></div><div class="t-info"><div class="t-name">Djalolov Sherzod</div><div class="t-meta"><span><i class="fas fa-briefcase"></i>5 yillik tajriba</span><span><i class="fas fa-map-pin"></i>Pop tumanida</span></div></div><div class="t-badge"><span class="badge-e">Ingliz tili</span></div></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="whyus">
+  <div style="text-align:center;max-width:640px;margin:0 auto 48px" class="reveal">
+    <div class="s-label">Afzalliklarimiz</div>
+    <h2 class="s-title">Nima uchun aynan biz?</h2>
+    <p class="s-sub" style="margin:0 auto">HDP bilan vaqtingiz va pulingizni to'g'ri sarflaysiz</p>
+  </div>
+  <div class="wu-cards">
+    <div class="wu-card reveal d1"><div class="wu-img"><img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=600&q=80" alt="Matematika natija"><div class="wu-img-ov"></div></div><div class="wu-body"><div class="wu-num">3 oy</div><h3>Matematika bo'yicha</h3><p>3 oylik kurs davomida <strong>B2 darajaga</strong> chiqasiz va DTM ballini 20+ ga oshirasiz</p></div></div>
+    <div class="wu-card reveal d2"><div class="wu-img"><img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600&q=80" alt="Ingliz tili natija"><div class="wu-img-ov"></div></div><div class="wu-body"><div class="wu-num">6 oy</div><h3>Ingliz tili bo'yicha</h3><p>6 oylik kursda <strong>B2–C1 darajaga</strong> chiqib, IELTS 6.5+ ball olasiz</p></div></div>
+    <div class="wu-card reveal d3"><div class="wu-img"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80" alt="Natija kafolati"><div class="wu-img-ov"></div></div><div class="wu-body"><div class="wu-num">100%</div><h3>Natija kafolati</h3><p>Har bir o'quvchiga <strong>individual yondashuv</strong> va natijaga kafolat beramiz</p></div></div>
+  </div>
+  <div class="wu-tagline reveal">
+    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=80" alt="bg">
+    <div class="wu-tagline-inner">
+      <p>HDP'da dars olgan o'quvchilarning <strong>95%</strong> i DTM va IELTS imtihonlarida maqsadli natijaga erishgan. Biz nafaqat bilim beramiz — <strong>muvaffaqiyatga olib boramiz.</strong></p>
+      <a href="#register" class="btn-white" style="display:inline-block">Bepul sinov darsiga yoziling</a>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register">
+  <div class="reg-wrap rs">
+    <div class="reg-head">
+      <div class="s-label" style="justify-content:center">Ro'yxatdan o'tish</div>
+      <h2 class="s-title" style="text-align:center">Bugun boshlang!</h2>
+      <p class="s-sub" style="margin:0 auto;text-align:center">Formani to'ldiring, biz siz bilan 1 soat ichida bog'lanamiz</p>
+    </div>
+    <div id="regForm">
+      <div class="fg">
+        <div class="fg-group"><label>Ism *</label><input type="text" id="fname" class="inp" placeholder="Isminiz"></div>
+        <div class="fg-group"><label>Familiya *</label><input type="text" id="lname" class="inp" placeholder="Familiyangiz"></div>
+        <div class="fg-group"><label>Yosh *</label><input type="number" id="age" class="inp" placeholder="Yoshingiz" min="5" max="60"></div>
+        <div class="fg-group"><label>Telefon *</label><input type="tel" id="phone" class="inp" placeholder="+998 90 000 00 00"></div>
+        <div class="fg-group full">
+          <label>Yo'nalish tanlang * (bir nechta tanlash mumkin)</label>
+          <div class="ch-grid">
+            <label class="ch-item" onclick="tch(this)"><input type="checkbox" id="ch_math"><span><i class="fas fa-calculator" style="color:var(--g500);margin-right:6px"></i>Matematika</span></label>
+            <label class="ch-item" onclick="tch(this)"><input type="checkbox" id="ch_eng"><span><i class="fas fa-language" style="color:var(--g500);margin-right:6px"></i>Ingliz tili</span></label>
+            <label class="ch-item ch-kids" onclick="tch(this)"><input type="checkbox" id="ch_kids"><span><i class="fas fa-child" style="color:#f97316;margin-right:6px"></i>Kichkinalar Matematikasi</span></label>
+            <label class="ch-item ch-ielts" onclick="tch(this)"><input type="checkbox" id="ch_ielts"><span><i class="fas fa-pen-nib" style="color:#2563eb;margin-right:6px"></i>IELTS Tayyorlov</span></label>
+          </div>
+        </div>
+        <div class="fg-group full"><label>Qo'shimcha izoh</label><textarea id="comment" class="inp" rows="4" placeholder="Qo'shimcha ma'lumot yoki savollaringiz..."></textarea></div>
+      </div>
+      <button class="btn-send" id="sendBtn" onclick="doSend(event)"><i class="fas fa-paper-plane"></i> &nbsp; Yuborish</button>
+    </div>
+    <div class="success" id="successBox">
+      <div class="success-ico"><i class="fas fa-check"></i></div>
+      <h3>Arizangiz qabul qilindi!</h3>
+      <p>Tez orada siz bilan bog'lanamiz. Rahmat!</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--g600),var(--g400));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Playfair Display',serif;font-size:20px;font-weight:900">H</div>
+        <div><div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#fff">HDP</div><div style="font-size:11px;color:var(--g400);font-weight:500;letter-spacing:.5px">O'quv Markazi</div></div>
+      </div>
+      <p>Namangan viloyatida 2019-yildan buyon faoliyat yuritib, minglab o'quvchilarga sifatli ta'lim berib kelmoqdamiz.</p>
+      <div class="ft-socials">
+        <a href="#" class="soc"><i class="fab fa-telegram"></i></a>
+        <a href="#" class="soc"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="soc"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="soc"><i class="fas fa-globe"></i></a>
+      </div>
+    </div>
+    <div class="ft-col"><h4>Filiallar</h4><ul>
+      <li><a href="#filiallar"><i class="fas fa-map-marker-alt"></i>Namangan Markaz</a></li>
+      <li><a href="#filiallar"><i class="fas fa-map-marker-alt"></i>Xoqand filiali</a></li>
+      <li><a href="#filiallar"><i class="fas fa-map-marker-alt"></i>Pop filiali</a></li>
+      <li><a href="#filiallar"><i class="fas fa-map-marker-alt"></i>Chortoq filiali</a></li>
+      <li><a href="#filiallar"><i class="fas fa-map-marker-alt"></i>Kosonsoy filiali</a></li>
+      <li><a href="#filiallar"><i class="fas fa-map-marker-alt"></i>Uychi filiali</a></li>
+    </ul></div>
+    <div class="ft-col"><h4>Telefon raqamlar</h4><ul>
+      <li><a href="tel:+998901234567"><i class="fas fa-phone"></i>+998 90 123 45 67</a></li>
+      <li><a href="tel:+998902345678"><i class="fas fa-phone"></i>+998 90 234 56 78</a></li>
+      <li><a href="tel:+998903456789"><i class="fas fa-phone"></i>+998 90 345 67 89</a></li>
+      <li><a href="tel:+998904567890"><i class="fas fa-phone"></i>+998 90 456 78 90</a></li>
+      <li><a href="tel:+998905678901"><i class="fas fa-phone"></i>+998 90 567 89 01</a></li>
+      <li><a href="tel:+998906789012"><i class="fas fa-phone"></i>+998 90 678 90 12</a></li>
+    </ul></div>
+    <div class="ft-col"><h4>Yo'nalishlar</h4><ul>
+      <li><a href="#yonalishlar"><i class="fas fa-chevron-right"></i>Matematika</a></li>
+      <li><a href="#yonalishlar"><i class="fas fa-chevron-right"></i>Ingliz tili</a></li>
+      <li><a href="#yonalishlar"><i class="fas fa-chevron-right"></i>Kichkinalar Matematikasi</a></li>
+      <li><a href="#yonalishlar"><i class="fas fa-chevron-right"></i>IELTS Tayyorlov</a></li>
+      <li><a href="#about"><i class="fas fa-chevron-right"></i>Biz haqimizda</a></li>
+      <li><a href="#register"><i class="fas fa-chevron-right"></i>Ro'yxatdan o'tish</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2025 HDP O'quv Markazi. Barcha huquqlar himoyalangan.</span>
+    <span>Namangan viloyati, O'zbekiston</span>
+  </div>
+</footer>
+
+<script>
+const BOT_TOKEN = '_BOT_TOKEN_HERE';
+const CHAT_ID   = '_CHAT_ID_HERE';
+
+// Cursor
+const cg=document.getElementById('cursorGlow');
+document.addEventListener('mousemove',e=>{cg.style.left=e.clientX+'px';cg.style.top=e.clientY+'px';});
+
+// Nav
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>40));
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+
+// Particles
+(function(){const c=document.getElementById('particles');for(let i=0;i<20;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*12+4;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*8}s`;c.appendChild(p);}})();
+
+// Reveal
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal,.rl,.rr,.rs').forEach(el=>io.observe(el));
+
+// Counter
+function animNum(el,target){let v=0;const s=target/50;const t=setInterval(()=>{v+=s;if(v>=target){v=target;clearInterval(t);}el.textContent=Math.floor(v)+(target>=100?'+':target<=5?'+':'');},35);}
+const sio=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('.stat-num').forEach(n=>animNum(n,parseInt(n.dataset.t)));sio.unobserve(x.target);}}),{threshold:.5});
+const hs=document.querySelector('.hero-stats');if(hs)sio.observe(hs);
+
+// Checkbox
+function tch(label){setTimeout(()=>label.classList.toggle('checked',label.querySelector('input').checked),0);}
+
+// Form
+async function doSend(e){
+  if(e)e.preventDefault();
+  const f=id=>document.getElementById(id).value.trim();
+  const fname=f('fname'),lname=f('lname'),age=f('age'),phone=f('phone'),comment=f('comment');
+  const math=document.getElementById('ch_math').checked,eng=document.getElementById('ch_eng').checked;
+  const kids=document.getElementById('ch_kids').checked,ielts=document.getElementById('ch_ielts').checked;
+  if(!fname||!lname||!age||!phone){
+    const w=document.querySelector('.reg-wrap');w.style.animation='shake .4s ease';setTimeout(()=>w.style.animation='',400);return;
+  }
+  if(!math&&!eng&&!kids&&!ielts){alert("Kamida bitta yo'nalish tanlang!");return;}
+  const yn=[math&&'Matematika',eng&&'Ingliz tili',kids&&'Kichkinalar Matematikasi',ielts&&'IELTS Tayyorlov'].filter(Boolean).join(', ');
+  const text=`🎓 <b>HDP — Yangi Ariza!</b>\n\n👤 <b>Ism Familiya:</b> ${fname} ${lname}\n🎂 <b>Yosh:</b> ${age}\n📞 <b>Telefon:</b> ${phone}\n📚 <b>Yo'nalish:</b> ${yn}\n💬 <b>Izoh:</b> ${comment||'—'}\n🕐 <b>Vaqt:</b> ${new Date().toLocaleString('uz-UZ')}`;
+  const btn=document.getElementById('sendBtn');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Yuborilmoqda...';btn.disabled=true;
+  try{
+    const r=await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CHAT_ID,text,parse_mode:'HTML'})});
+    const d=await r.json();
+    if(d.ok){document.getElementById('regForm').style.display='none';document.getElementById('successBox').style.display='block';}
+    else{alert('Xatolik: '+d.description);btn.innerHTML='<i class="fas fa-paper-plane"></i> Yuborish';btn.disabled=false;}
+  }catch{alert("Tarmoq xatosi!");btn.innerHTML='<i class="fas fa-paper-plane"></i> Yuborish';btn.disabled=false;}
+}
+const ss=document.createElement('style');
+ss.textContent='@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}';
+document.head.appendChild(ss);
+</script>
 </body>
 </html>
